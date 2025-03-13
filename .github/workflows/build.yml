@@ -19,12 +19,13 @@ jobs:
         sudo apt-get install -y build-essential cmake qt6-base-dev qt6-declarative-dev qml6-module-qtquick qml6-module-qtquick-controls
 
     - name: Create Build Directory
-      run: mkdir build
+      working-directory: test
+      run: mkdir -p build
 
     - name: Configure CMake
-      working-directory: build
+      working-directory: test/build
       run: cmake ..
 
     - name: Build
-      working-directory: build
+      working-directory: test/build
       run: cmake --build . --config Release
