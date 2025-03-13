@@ -20,7 +20,7 @@ jobs:
         host: 'linux'
         target: 'desktop'
         arch: 'gcc_64'
-        modules: 'qtquick qtquickcontrols2'
+        modules: 'qt5compat qtdeclarative qtshadertools'
         cache: true
 
     - name: Create Build Directory
