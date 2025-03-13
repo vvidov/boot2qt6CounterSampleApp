@@ -13,10 +13,21 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Install Qt and build dependencies
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v3
+      with:
+        version: '6.5.3'
+        host: 'linux'
+        target: 'desktop'
+        arch: 'gcc_64'
+        modules: 'qtdeclarative qtquickcontrols2'
+        dir: '${{ github.workspace }}/qt'
+        cache: true
+
+    - name: Install build dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y build-essential cmake qt6-base-dev qt6-declarative-dev qml6-module-qtquick qml6-module-qtquick-controls
+        sudo apt-get install -y build-essential cmake
 
     - name: Clean and Create Build Directory
       working-directory: test
@@ -26,7 +37,8 @@ jobs:
 
     - name: Configure CMake
       working-directory: test/build
-      run: cmake -DCMAKE_BUILD_TYPE=Release ..
+      run: |
+        cmake -DCMAKE_PREFIX_PATH=${{ github.workspace }}/qt/6.5.3/gcc_64 -DCMAKE_BUILD_TYPE=Release ..
 
     - name: Build
       working-directory: test/build
