@@ -1,4 +1,4 @@
-name: Build
+name: build
  
 on: push # when to trigger this. Here, on every push
 jobs:
