@@ -7,7 +7,31 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  desktop-build:
+    name: Desktop Build
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install Qt and build dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential cmake qt6-base-dev qt6-declarative-dev qml6-module-qtquick qml6-module-qtquick-controls
+
+    - name: Create Build Directory
+      run: mkdir build-desktop
+
+    - name: Configure CMake
+      working-directory: build-desktop
+      run: cmake ..
+
+    - name: Build
+      working-directory: build-desktop
+      run: cmake --build . --config Release
+
+  boot2qt-build:
+    name: Boot2Qt Build
     runs-on: ubuntu-latest
 
     steps:
@@ -16,25 +40,29 @@ jobs:
     - name: Install Qt
       uses: jurplel/install-qt-action@v3
       with:
-        version: '6.5.*'
+        version: '6.5.3'
         host: 'linux'
         target: 'desktop'
         arch: 'gcc_64'
-        modules: 'qt5compat qtdeclarative qtshadertools'
+        dir: '${{ github.workspace }}/qt'
         cache: true
 
+    # We'll simulate Boot2Qt build environment check
+    - name: Build Environment Check
+      run: |
+        echo "Checking Boot2Qt build environment..."
+        echo "Note: This is a basic build check. For actual device deployment, use the Boot2Qt SDK."
+        cmake --version
+
     - name: Create Build Directory
-      run: mkdir build
+      run: mkdir build-boot2qt
 
     - name: Configure CMake
-      working-directory: build
-      run: cmake ..
+      working-directory: build-boot2qt
+      run: |
+        echo "Configuring for Boot2Qt build..."
+        cmake .. -DCMAKE_PREFIX_PATH=${{ github.workspace }}/qt/6.5.3/gcc_64
 
     - name: Build
-      working-directory: build
+      working-directory: build-boot2qt
       run: cmake --build . --config Release
-
-    # If you have tests, uncomment and adjust the following:
-    #- name: Test
-    #  working-directory: build
-    #  run: ctest --output-on-failure
