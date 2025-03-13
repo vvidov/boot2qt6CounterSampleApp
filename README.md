@@ -1,5 +1,7 @@
 # Boot2Qt6 Counter Sample Application
 
+[![Build and Test](../../actions/workflows/build.yml/badge.svg)](../../actions/workflows/build.yml)
+
 This repository accompanies the blog post ["Quick Start with Boot2Qt6 on Raspberry Pi"](https://vvidov.gitlab.io/blog/quick-start-boot2qt6-raspberry-pi), demonstrating how to set up a complete Qt6 development environment in Ubuntu VM for Raspberry Pi deployment.
 
 ## Development Setup

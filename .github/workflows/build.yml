@@ -1,0 +1,40 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v3
+      with:
+        version: '6.5.*'
+        host: 'linux'
+        target: 'desktop'
+        arch: 'gcc_64'
+        modules: 'qtquick qtquickcontrols2'
+        cache: true
+
+    - name: Create Build Directory
+      run: mkdir build
+
+    - name: Configure CMake
+      working-directory: build
+      run: cmake ..
+
+    - name: Build
+      working-directory: build
+      run: cmake --build . --config Release
+
+    # If you have tests, uncomment and adjust the following:
+    #- name: Test
+    #  working-directory: build
+    #  run: ctest --output-on-failure
