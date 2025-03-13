@@ -5,14 +5,14 @@ This repository accompanies the blog post "Quick Start with Boot2Qt6 on Raspberr
 ## Development Setup
 
 ### Desktop Build Configuration
-![Qt Desktop Build](BuildQtdesktop.png)
+![Qt Desktop Build](BuildQtDesktop.png)
 Local development setup in Qt Creator:
 - Ubuntu VM development environment
 - Desktop kit for rapid testing
 - Full debugging capabilities
 
 ### Raspberry Pi Configuration
-![Raspberry Pi Build](BuildRpi.png)
+![Raspberry Pi Build](BuildRPi.png)
 Remote device setup in Qt Creator:
 - Boot2Qt cross-compilation toolchain
 - Remote debugging configuration
